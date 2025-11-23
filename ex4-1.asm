@@ -1,6 +1,6 @@
 org 100h
 
-x dw 0xA
+x dw 0xA0
 y dw 0x80
 
 jmp start
