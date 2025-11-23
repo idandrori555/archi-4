@@ -1,37 +1,25 @@
-org 100h
+jmp main
 
-x dw 0xA0
-y dw 0x80
 
-jmp start
-
-start:
-    push [x]
-    push [y]
+PROC Min
+    mov si, sp
+    mov bx, [si+2] ; second
+    mov ax, [si+4] ; first
+    jmp Min_main
     
-    call min
-    
-    add sp, 4
-    
-    jmp end
-
-PROC min
-    push bp
-    mov bp, sp
-
-    mov ax, [bp+4]
-    mov bx, [bp+6]
-    
+Min_main:    
     cmp ax, bx
-    jbe done
-    mov ax, [bp+6]
+    jl Min_end 
     
-done:
-    pop bp
-    ret 4
-ENDP
+    mov ax, bx 
 
-end:
-    xor ah, ah
-    int 16h
-    ret
+Min_end: ret 
+ENDP Min
+
+
+
+main:
+    push 0x12
+    push 0x123
+    call Min
+    add sp, 4
