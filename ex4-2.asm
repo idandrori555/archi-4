@@ -1,36 +1,26 @@
-x db 0x7F
-y db 0x80
+num1 dw 0x12
+num2 dw 0x34
+
+jmp start
+
+PROC func
+mov bx, sp
+
+mov si, [bx+2] ; num 2
+mov di, [bx+4] ; num 1
+
+mov cx, [si]
+mov dx, [di]
+
+mov [si], dx
+mov [di], cx
+
+ret
+ENDP func
 
 start:
-    mov al, x
-    xor ah, ah
-    push ax
+push offset num1
+push offset num2
 
-    mov al, y
-    xor ah, ah
-    push ax
-
-    call swap
-    add sp, 4
-
-end:
-    xor ah, ah
-    int 16h
-    ret
-
-PROC swap
-    push bp
-    mov bp, sp
-
-    mov ax, [bp+4]
-    mov bx, [bp+6]
-    xchg bx, cx
-    mov [bp+4], ax
-    mov [bp+6], bx
-
-    xor ax, ax ; 'return' 0
-
-    mov sp, bp
-    pop bp
-    ret 4 ; 2 words
-ENDP
+call func
+add sp, 4
