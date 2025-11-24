@@ -4,18 +4,30 @@ num1 dw 0x12
 num2 dw 0x34
 
 PROC swap
-mov bx, sp
-
-mov si, [bx+2] ; num 2
-mov di, [bx+4] ; num 1
-
-mov cx, [si]
-mov dx, [di]
-
-mov [si], dx
-mov [di], cx
-
-ret
+    push bp
+    mov bp, sp
+    
+    push si
+    push di
+    push cx
+    push dx
+    
+    mov si, [bp + 4]
+    mov di, [bp + 6]
+    
+    mov cx, [si]
+    mov dx, [di]
+    
+    mov [si], dx
+    mov [di], cx
+    
+    pop dx
+    pop cx
+    pop di
+    pop si
+    
+    pop bp
+    ret
 ENDP swap
 
 start:
