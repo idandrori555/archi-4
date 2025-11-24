@@ -1,5 +1,11 @@
-jmp main
+x dw 0x7F
+y dw 0x80
 
+push x
+push y
+call Min
+add sp, 4
+hlt
 
 PROC Min
     mov si, sp
@@ -15,11 +21,3 @@ Min_main:
 
 Min_end: ret 
 ENDP Min
-
-
-
-main:
-    push 0x12
-    push 0x123
-    call Min
-    add sp, 4
