@@ -1,3 +1,5 @@
+org 100h
+
 jmp start
 
 num1 dw 0x12
@@ -31,13 +33,13 @@ PROC swap
 ENDP swap
 
 start:
-push offset num1
-push offset num2
-
-call swap
-add sp, 4
+    push offset num1
+    push offset num2
+    
+    call swap
+    add sp, 4
 
 end:
-mov ah, 0
-int 16h
-ret
+    mov ah, 0
+    int 16h
+    ret
