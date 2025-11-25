@@ -149,6 +149,31 @@ done_sort:
     ret
 ENDP sort
 
+PROC print_arr
+    push bp
+    mov bp, sp
+    
+    mov cx, [bp + 4] ; size
+    mov bx, [bp + 6] ; arr ptr
+    xor si, si
+    
+print_loop:
+    cmp si, cx
+    jge print_end
+        
+    mov al, [bx]
+    xor ah, ah
+    call print_num_uns
+    
+    inc si
+    inc bx
+    jmp print_loop
+    
+print_end:    
+    pop bp
+    ret
+ENDP print_arr
+
 start:
     ; sort
     push offset arr
@@ -156,6 +181,14 @@ start:
     call sort
     add sp, 4
     
+    PRINTN "Sorted array: "
+    push offset arr
+    push arr_size
+    call print_arr
+    add sp, 4
+    
     xor ah, ah
     int 16h
-    ret
+    ret 
+
+include magshimim.inc
